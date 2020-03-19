@@ -1,0 +1,182 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://assets/Old hero.png" type="Texture" id=1]
+[ext_resource path="res://src/Player/Player.gd" type="Script" id=2]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 1 )
+region = Rect2( 16, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 48, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 64, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 16, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 48, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 1 )
+region = Rect2( 64, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 1 )
+region = Rect2( 80, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 1 )
+region = Rect2( 96, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 1 )
+region = Rect2( 96, 32, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 1 )
+region = Rect2( 80, 32, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=13]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
+"loop": true,
+"name": "run",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 11 ) ],
+"loop": true,
+"name": "fall",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 12 ) ],
+"loop": true,
+"name": "jump",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=14]
+extents = Vector2( 3, 7 )
+
+[node name="Player" type="KinematicBody2D"]
+collision_layer = 0
+script = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -7 )
+current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+drag_margin_left = 0.1
+drag_margin_top = 0.75
+drag_margin_right = 0.1
+
+[node name="ShiftTween" type="Tween" parent="Camera2D"]
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Body"]
+position = Vector2( 0, -8 )
+frames = SubResource( 13 )
+animation = "idle"
+frame = 2
+playing = true
+
+[node name="Weapon" type="Position2D" parent="Body"]
+position = Vector2( 3, -5 )
+
+[node name="PhysicsShape" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -7 )
+shape = SubResource( 14 )
+
+[node name="Raycasters" type="Node2D" parent="."]
+
+[node name="WallRays" type="Node2D" parent="Raycasters"]
+
+[node name="Left" type="Node2D" parent="Raycasters/WallRays"]
+
+[node name="RayCast2D1" type="RayCast2D" parent="Raycasters/WallRays/Left"]
+position = Vector2( 3, -13 )
+enabled = true
+cast_to = Vector2( 2, 0 )
+
+[node name="RayCast2D2" type="RayCast2D" parent="Raycasters/WallRays/Left"]
+position = Vector2( 3, -1 )
+enabled = true
+cast_to = Vector2( 2, 0 )
+
+[node name="RayCast2D3" type="RayCast2D" parent="Raycasters/WallRays/Left"]
+position = Vector2( 3, -7 )
+enabled = true
+cast_to = Vector2( 2, 0 )
+
+[node name="Right" type="Node2D" parent="Raycasters/WallRays"]
+
+[node name="RayCast2D1" type="RayCast2D" parent="Raycasters/WallRays/Right"]
+position = Vector2( -3, -13 )
+enabled = true
+cast_to = Vector2( -2, 0 )
+
+[node name="RayCast2D2" type="RayCast2D" parent="Raycasters/WallRays/Right"]
+position = Vector2( -3, -1 )
+enabled = true
+cast_to = Vector2( -2, 0 )
+
+[node name="RayCast2D3" type="RayCast2D" parent="Raycasters/WallRays/Right"]
+position = Vector2( -3, -7 )
+enabled = true
+cast_to = Vector2( -2, 0 )
+
+[node name="GroundRays" type="Node2D" parent="Raycasters"]
+
+[node name="RayCast2D1" type="RayCast2D" parent="Raycasters/GroundRays"]
+position = Vector2( -4, -1 )
+enabled = true
+cast_to = Vector2( 0, 2 )
+collision_mask = 3
+
+[node name="RayCast2D2" type="RayCast2D" parent="Raycasters/GroundRays"]
+position = Vector2( 0, -1 )
+enabled = true
+cast_to = Vector2( 0, 2 )
+collision_mask = 3
+
+[node name="RayCast2D3" type="RayCast2D" parent="Raycasters/GroundRays"]
+position = Vector2( 4, -1 )
+enabled = true
+cast_to = Vector2( 0, 2 )
+collision_mask = 3
+
+[node name="Debug" type="Node2D" parent="."]
+
+[node name="Motion" type="Label" parent="Debug"]
+visible = false
+margin_left = -20.0
+margin_top = -29.0
+margin_right = 20.0
+margin_bottom = -15.0
+text = "?"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
