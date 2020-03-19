@@ -4,7 +4,7 @@ class_name State
 func is_valid(owner: Object) -> bool:
 	return true
 
-func transition(owner: Object) -> Reference:
+func get_next_state(owner: Object) -> Reference:
 	return self.get_class()
 
 func enter(owner: Object, previous_state: Reference) -> void:

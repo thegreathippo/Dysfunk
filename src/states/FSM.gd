@@ -11,7 +11,7 @@ func _init() -> void:
 func handle_process(owner: Object, delta: float) -> void:
 	_current_state.apply_process(owner, delta)
 	if not _current_state.is_valid(owner):
-		var state_class = _current_state.transition(owner)
+		var state_class = _current_state.get_next_state(owner)
 		set_state(owner, state_class)
 
 func handle_input(owner: Object, event: InputEvent) -> void:

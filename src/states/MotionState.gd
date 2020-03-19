@@ -33,7 +33,7 @@ class Idle:
 		return .is_valid(owner) &&\
 		owner.velocity.x == 0
 
-	func transition(owner: Object) -> Reference:
+	func get_next_state(owner: Object) -> Reference:
 		if !owner.is_grounded():
 			if owner.velocity.y < 0:
 				return Jump
@@ -55,7 +55,7 @@ class Run:
 		return .is_valid(owner) &&\
 		owner.velocity.x != 0 
 
-	func transition(owner: Object) -> Reference:
+	func get_next_state(owner: Object) -> Reference:
 		if !owner.is_grounded():
 			if owner.velocity.y < 0:
 				return Jump
@@ -77,7 +77,7 @@ class Jump:
 		return .is_valid(owner) &&\
 		owner.velocity.y < 0
 
-	func transition(owner: Object) -> Reference:
+	func get_next_state(owner: Object) -> Reference:
 		if owner.is_grounded():
 			return Idle
 		else:
@@ -100,7 +100,7 @@ class Fall:
 		return .is_valid(owner) &&\
 		owner.velocity.y >= 0
 
-	func transition(owner: Object) -> Reference:
+	func get_next_state(owner: Object) -> Reference:
 		if owner.is_grounded():
 			return Idle
 		else:
